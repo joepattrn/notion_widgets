@@ -39,7 +39,7 @@
             font-size: 14px;
             font-weight: 500;
         }
-        input[type="range"], select, textarea {
+        input[type="range"], select, textarea, input[type="date"] {
             width: 100%;
             margin-top: 8px;
             box-sizing: border-box;
@@ -104,21 +104,21 @@
         input[type="range"]::-moz-range-thumb:hover {
             background: #2596be;
         }
-        select, textarea {
+        select, textarea, input[type="date"] {
             padding: 8px 12px;
             font-size: 14px;
             border: 1px solid #e0e0e0;
             border-radius: 6px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        select {
+        select, input[type="date"] {
             height: 36px;
         }
         textarea {
-            height: 144px; /* 4 times the original height */
+            height: 144px;
             resize: vertical;
         }
-        select:focus, textarea:focus {
+        select:focus, textarea:focus, input[type="date"]:focus {
             outline: none;
             border-color: #2eaadc;
             box-shadow: 0 0 0 2px rgba(46, 170, 220, 0.2);
@@ -130,6 +130,23 @@
             background-position: right 12px top 50%;
             background-size: 10px auto;
             padding-right: 30px;
+        }
+        input[type="date"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
         }
     </style>
 </head>
@@ -150,6 +167,9 @@
             </select>
             <div id="statusIndicator"></div>
         </div>
+
+        <label for="lastUpdated">Last Updated:</label>
+        <input type="date" id="lastUpdated">
 
         <label for="message">Message:</label>
         <textarea id="message" placeholder="Enter your status message"></textarea>
@@ -176,6 +196,9 @@
                     break;
             }
         }
+
+        // Set default date to today
+        document.getElementById('lastUpdated').valueAsDate = new Date();
 
         // Initialize status indicator
         updateStatus();
